@@ -1,5 +1,6 @@
 package com.sikar.tamilSchool.controller;
 
+import com.sikar.tamilSchool.Service.StudentService;
 import com.sikar.tamilSchool.model.Student;
 import com.sikar.tamilSchool.repos.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class StudentController {
     @Autowired
     StudentRepository studentRepository;
 
+    @Autowired
+    StudentService studentService;
+
     @PostMapping("/student")
     String createStudent(@RequestBody Student student) {
         studentRepository.save(student);
@@ -34,19 +38,7 @@ public class StudentController {
 
     @GetMapping("/student/{id}")
     ResponseEntity<Student> getStudent(@PathVariable Long id) {
-        Optional<Student> student = studentRepository.findById(id);
-
-        if (student.isPresent()) {
-            return ResponseEntity.status(HttpStatus.OK).body(student.get());
-        }
-//        for (int i = 0; i < studentList.size(); i++) {
-//            Student student = studentList.get(i);
-//            if (student.getId() == id) {
-//                return ResponseEntity.status(200).body(student);
-//            }
-//        }
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        return ResponseEntity.ok(studentService.getStudent(id));
     }
 
     @DeleteMapping("/student/{id}")
