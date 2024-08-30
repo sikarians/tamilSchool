@@ -40,9 +40,10 @@ public class StudentService {
             student1.setName(student.getName());
             studentRepository.save(student1);
             return student1;
-        }else {
+        } else {
             return null;
         }
+    }
 
         public boolean removeStudent ( long id){
             Optional<Student> student = studentRepository.findById(id);

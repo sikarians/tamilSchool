@@ -9,14 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
-
 @RestController
 public class StudentController {
 // path paremeter -> to identify your resource
 //    query param -> filter your resource
-
     // CRUD
-
 //    List<Student> studentList = new ArrayList<>();
     @Autowired
     StudentService studentService;
@@ -45,15 +42,15 @@ public class StudentController {
         }else {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body("student not foud with that id: " + id);
+        }
     }
 
     @PutMapping("/student")
     ResponseEntity<Student> putStudent(@RequestBody Student student) {
             Student updatedStudent=StudentService.updateValue(updatedStudent.getId(),student);
             if ((updatedStudent !=null){
-
             return ResponseEntity.ok (updatedStudent);
-        }else {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-    }
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
         }
