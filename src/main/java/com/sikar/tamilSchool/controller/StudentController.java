@@ -18,22 +18,17 @@ public class StudentController {
     // CRUD
 
 //    List<Student> studentList = new ArrayList<>();
-
-    @Autowired
-    StudentRepository studentRepository;
-
     @Autowired
     StudentService studentService;
 
     @PostMapping("/student")
-    String createStudent(@RequestBody Student student) {
-        studentRepository.save(student);
-        return "student created";
+   ResponseEntity<Student> createStudent(@RequestBody Student student) {
+       return ResponseEntity.status(200).body(studentService.addStudent(student));
     }
 
     @GetMapping("/students")
     ResponseEntity<Iterable<Student>> getStudents() {
-       return ResponseEntity.status(200).body(studentRepository.findAll());
+       return ResponseEntity.status(200).body(studentService.getAllStudent());
     }
 
     @GetMapping("/student/{id}")
@@ -43,62 +38,22 @@ public class StudentController {
 
     @DeleteMapping("/student/{id}")
     ResponseEntity<String> deleteStudent(@PathVariable Long id) {
-        Optional<Student> student = studentRepository.findById(id);
-        if (student.isPresent()) {
-            studentRepository.deleteById(id);
+        if ( studentService.removeStudent(id)){
+
             return ResponseEntity.status(HttpStatus.OK)
-                    .body("student removed: " + student.get().getName());
-        }
-
-//        for (int i = 0; i < studentList.size(); i++) {
-//            Student student = studentList.get(i);
-//            if (student.getId() == id) {
-//                studentList.remove(student);
-//                return ResponseEntity.status(200).body("student removed: " + student.getName());
-//            }
-//        }
-
+                    .body("student removed with Id: " + id);
+        }else {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body("student not foud with that id: " + id);
     }
 
     @PutMapping("/student")
     ResponseEntity<Student> putStudent(@RequestBody Student student) {
-        Optional<Student> studentFromDB = studentRepository.findById(student.getId());
-        if (studentFromDB.isPresent()) {
-            // un wrapping
-            Student student1 = studentFromDB.get();
-            student1.setName(student.getName());
-            studentRepository.save(student1);
-            return ResponseEntity.ok(student1);
-        }
-//        for (int i = 0; i < studentList.size(); i++) {
-//            Student studentFromDB = studentList.get(i);
-//            if (student.getId() == studentFromDB.getId()) {
-//                studentList.set(i, student);
-//                return ResponseEntity.status(200).body("student updated: " + student.getName());
-//            }
-//        }
+            Student updatedStudent=StudentService.updateValue(updatedStudent.getId(),student);
+            if ((updatedStudent !=null){
 
+            return ResponseEntity.ok (updatedStudent);
+        }else {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
-
-    @GetMapping("/student")
-    String getStudent() {
-        return "Malai, Raja, ravi";
-    }
-
-
-}
-
-/*
- class DispatchServlet {
- getStudent(1)
-
- requstMapper
-
-     requestMapper.set("/student", StudentController, getStudent, parameters)
-
-}
-*/
-
+        }
