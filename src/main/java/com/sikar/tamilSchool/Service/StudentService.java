@@ -49,7 +49,7 @@ public class StudentService {
             Optional<Student> student = studentRepository.findById(id);
             if (student.isPresent()) {
                 studentRepository.deleteById(id);
-                return "true;
+                return true;
             }
             return false;
         }

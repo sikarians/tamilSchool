@@ -15,22 +15,25 @@ import java.util.Optional;
 
 @RestController
 public class EmployeeController {
+    private EmployeeService employeeService;
+
     @Autowired
-    EmployeeService employeeService;
+    EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     @PostMapping("/createEmployee")
-    public String addValues(@RequestBody Employee emp) {
-        employeeService.addData(emp);
-        return "employee list added";
+    public Employee createEmployee(@RequestBody Employee emp) {
+        return employeeService.addData(emp);
     }
     @GetMapping("/officeEmp/{id}")
-    public List<Employee> getValues(@PathVariable Integer id) {
+    public Employee getEmployee(@PathVariable Long id) {
         return employeeService.getData(id);
     }
 
     @GetMapping("/officeEmp/id")
-    public Optional<Employee> getAllValues() {
-        return employeeService.getData(id);
+    public List<Employee> getAllEmployees() {
+        return employeeService.getAllData();
     }
 
     @PutMapping("/officeEmp")
@@ -39,7 +42,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/officeEmp/{id}")
-    public string deleteValues(@PathVariable Integer id) {
+    public String deleteValues(@PathVariable Long id) {
         return employeeService.deleteData(id);
     }
 }

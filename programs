@@ -1,0 +1,17 @@
+print 1 to 100
+print 1 to 100 in reverse order
+print a if input is 1, print b if input is 2, print c if input is 3
+Max -> [2,5,3,9] ans: 9
+Min -> [2,5,3,9] ans: 2
+Average -> [2, 3, 2] ans: 2
+
+print the array
+print the array in reverse
+count the array elements [2, 3, 2] -> 3
+count the array unique elements [2, 3, 2] -> 2
+
+filter the array elements that are above 5 [2,5,3,9] -> [9]
+join the array [2,5,3,9] -> "2539"
+Stringbuilder, String concatenation
+join the array with $ symbol [e, l, u] -> "e$l$u"
+
