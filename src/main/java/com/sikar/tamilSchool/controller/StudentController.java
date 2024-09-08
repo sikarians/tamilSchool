@@ -1,6 +1,7 @@
 package com.sikar.tamilSchool.controller;
 
 import com.sikar.tamilSchool.Service.StudentService;
+import com.sikar.tamilSchool.model.Enrollment;
 import com.sikar.tamilSchool.model.Student;
 import com.sikar.tamilSchool.repos.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,12 @@ public class StudentController {
     @PostMapping("/student")
     ResponseEntity<Student> createStudent(@RequestBody Student student) {
         return ResponseEntity.status(200).body(studentService.addStudent(student));
+    }
+
+    @PostMapping("{id}/enroll")
+    ResponseEntity<Void> enrollCourse(@RequestBody Enrollment enrollment) {
+        studentService.enrollCourse(enrollment);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/students")
@@ -54,4 +61,8 @@ public class StudentController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+
+
+
+
 }
