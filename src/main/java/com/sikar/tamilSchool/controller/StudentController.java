@@ -13,10 +13,7 @@ import java.util.Optional;
 
 @RestController
 public class StudentController {
-    // path paremeter -> to identify your resource
-//    query param -> filter your resource
-    // CRUD
-//    List<Student> studentList = new ArrayList<>();
+
     @Autowired
     StudentService studentService;
 
