@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,10 +19,36 @@ public class StudentService {
     @Autowired
     StudentRepository studentRepository;
 
+//    @Autowired
+//    CourseManagementFeignClient courseManagementFeignClient;
+
     @Autowired
-    CourseManagementFeignClient courseManagementFeignClient;
+    RestTemplate restTemplate;
+
+    WebClient webClient = WebClient.builder().build();
+
+    public void enrollCourse(Enrollment enrollment) {
+
+//        courseManagementFeignClient.enrollCourse(enrollment);
+
+       ResponseEntity<Enrollment> enrollmentPacket = restTemplate
+               .postForEntity("http://localhost:9090/enroll", enrollment, Enrollment.class);
+        System.out.println("Enrollment packet received: " + enrollmentPacket.getBody());
+        System.out.println("do some other work");
 
 
+//     Enrollment enrollment1 = enrollmentPacket.getBody();
+
+//       Mono<Enrollment> enrollmentMono = webClient.post().uri("http://localhost:9090/enroll")
+//                .bodyValue(enrollment)
+//                .retrieve()
+//                .bodyToMono(Enrollment.class);
+//        enrollmentMono.subscribe(System.out::println);
+//        System.out.println("do some other work");
+//        //
+//
+
+    }
 
     public Student addStudent(Student student)
     {
@@ -59,8 +88,4 @@ public class StudentService {
             }
             return false;
         }
-
-    public void enrollCourse(Enrollment enrollment) {
-        courseManagementFeignClient.enrollCourse(enrollment);
-    }
 }

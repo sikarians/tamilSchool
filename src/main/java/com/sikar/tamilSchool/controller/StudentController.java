@@ -16,12 +16,13 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
+
     @PostMapping("/student")
     ResponseEntity<Student> createStudent(@RequestBody Student student) {
         return ResponseEntity.status(200).body(studentService.addStudent(student));
     }
 
-    @PostMapping("{id}/enroll")
+    @PostMapping("/enroll")
     ResponseEntity<Void> enrollCourse(@RequestBody Enrollment enrollment) {
         studentService.enrollCourse(enrollment);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -49,7 +50,7 @@ public class StudentController {
     }
 
     @PutMapping("/student")
-    ResponseEntity<Student> putStudent(@RequestBody Student student) {
+    ResponseEntity<Student> updateStudent(@RequestBody Student student) {
         Student updatedStudent = studentService.updateValue(student.getId(), student);
         if ((updatedStudent != null)) {
             return ResponseEntity.ok(updatedStudent);
