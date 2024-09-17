@@ -11,7 +11,6 @@ public class TamilSchoolApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext applicationContext = SpringApplication.run(TamilSchoolApplication.class, args);
-
 	}
 
 }
