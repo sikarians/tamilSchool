@@ -5,11 +5,10 @@ spring:
     application:
         name: tamilSchool
     datasource:
-#        driverClassName: org.h2.Driver
-        password: password
-        url: jdbc:h2:file:/Users/elumalairamalingam/Workspace/Sikar/Training/DB/dev/db
-#        url: jdbc:h2:mem:testdb
+        driverClassName: org.h2.Driver
+        url: jdbc:h2:mem:testdb
         username: sa
+        password: password
         ddl-auto: true
     h2:
         console:

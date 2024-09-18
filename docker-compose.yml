@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  student-service:
+    image: elumalai25/tamilschool:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_PROFILES_ACTIVE: pq
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/student
+      SPRING_DATASOURCE_USERNAME: sikar
+      SPRING_DATASOURCE_PASSWORD: pass@123
+    networks:
+      - student-network
+
+  postgres:
+    image: postgres:13
+    container_name: studentPostgres
+    environment:
+      POSTGRES_USER: sikar
+      POSTGRES_PASSWORD: pass@123
+      POSTGRES_DB: student
+    ports:
+      - "5432:5432"
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - student-network
+
+networks:
+  student-network:
+    driver: bridge
