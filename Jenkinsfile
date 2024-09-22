@@ -15,6 +15,7 @@ pipeline {
                 // sh 'mvn clean install'  // If you use Maven
             }
         }
+
         stage('Test') {
             steps {
                 // Run the tests
