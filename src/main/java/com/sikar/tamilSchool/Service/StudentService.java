@@ -19,22 +19,22 @@ public class StudentService {
     @Autowired
     StudentRepository studentRepository;
 
-//    @Autowired
-//    CourseManagementFeignClient courseManagementFeignClient;
+    @Autowired
+    CourseManagementFeignClient courseManagementFeignClient;
 
     @Autowired
     RestTemplate restTemplate;
 
-    WebClient webClient = WebClient.builder().build();
+//    WebClient webClient = WebClient.builder().build();
 
     public void enrollCourse(Enrollment enrollment) {
 
-//        courseManagementFeignClient.enrollCourse(enrollment);
+        courseManagementFeignClient.enrollCourse(enrollment);
 
-       ResponseEntity<Enrollment> enrollmentPacket = restTemplate
-               .postForEntity("http://localhost:9090/enroll", enrollment, Enrollment.class);
-        System.out.println("Enrollment packet received: " + enrollmentPacket.getBody());
-        System.out.println("do some other work");
+//       ResponseEntity<Enrollment> enrollmentPacket = restTemplate
+//               .postForEntity("http://course-service/enroll", enrollment, Enrollment.class);
+//        System.out.println("Enrollment packet received: " + enrollmentPacket.getBody());
+//        System.out.println("do some other work");
 
 
 //     Enrollment enrollment1 = enrollmentPacket.getBody();
