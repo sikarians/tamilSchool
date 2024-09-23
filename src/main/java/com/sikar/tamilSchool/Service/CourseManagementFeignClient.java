@@ -11,4 +11,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface CourseManagementFeignClient {
     @PostMapping("/enroll")
     ResponseEntity<Enrollment> enrollCourse(@RequestBody Enrollment enrollment);
+
 }
