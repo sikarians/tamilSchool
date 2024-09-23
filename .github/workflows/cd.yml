@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CD Pipeline
 
 on:
   push:
@@ -22,13 +22,10 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build with Gradle
-        run: ./gradlew build
-
       - name: Build Docker image
         run: docker build -t elumalai25/student-service:latest .
 
       - name: Push Docker image to Docker Hub
         run: |
-          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+#          echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
           docker push elumalai25/student-service:latest
