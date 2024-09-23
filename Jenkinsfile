@@ -1,37 +1,63 @@
 pipeline {
     agent any
+
+    environment {
+        BRANCH = "${env.BRANCH_NAME ?: 'Unknown'}"
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                // Dynamically checkout the branch being built
+                // Checkout the branch dynamically
+                echo "Checking out branch: ${BRANCH}"
                 checkout scm
             }
         }
+
         stage('Build') {
             steps {
-                // Use Gradle or Maven to build the Spring Boot project
-                sh './gradlew clean build'  // If you use Gradle
-                // OR
-                // sh 'mvn clean install'  // If you use Maven
+                script {
+                    try {
+                        echo "Building on branch: ${BRANCH}"
+                        // Use Gradle or Maven to build the Spring Boot project
+                        sh './gradlew clean build'  // For Gradle
+                        // OR
+                        // sh 'mvn clean install'  // For Maven
+                    } catch (Exception e) {
+                        echo "Build failed on branch: ${BRANCH}"
+                        error("Build failed with exception: ${e}")
+                    }
+                }
             }
         }
 
         stage('Test') {
             steps {
-                // Run the tests
-                sh './gradlew test'  // For Gradle
-                // OR
-                // sh 'mvn test'  // For Maven
+                script {
+                    try {
+                        echo "Running tests on branch: ${BRANCH}"
+                        // Run tests
+                        sh './gradlew test'  // For Gradle
+                        // OR
+                        // sh 'mvn test'  // For Maven
+                    } catch (Exception e) {
+                        echo "Tests failed on branch: ${BRANCH}"
+                        error("Tests failed with exception: ${e}")
+                    }
+                }
             }
         }
     }
 
     post {
         success {
-            echo 'Build and Test successful!'
+            echo "Build and tests successful on branch: ${BRANCH}"
         }
         failure {
-            echo 'Build or Test failed!'
+            echo "Build or tests failed on branch: ${BRANCH}"
+        }
+        always {
+            echo "Pipeline finished for branch: ${BRANCH}"
         }
     }
 }
