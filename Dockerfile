@@ -1,14 +1,12 @@
-# Use an official OpenJDK runtime as a parent image
-FROM openjdk:17-slim
-
-# Set the working directory in the container
+# Stage 1: Build the application using Gradle
+FROM gradle:7.5.1-jdk17 AS builder
 WORKDIR /app
+COPY . .
+RUN gradle build --no-daemon
 
-# Copy the JAR file of your StudentService into the container
-COPY build/libs/tamilSchool-0.0.1-SNAPSHOT.jar /app/tamilschool.jar
-
-# Expose the port your application runs on (this should match your Spring Boot configuration)
+# Stage 2: Create the final image
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=builder /app/build/libs/*.jar app.jar
 EXPOSE 8080
-
-# Command to run the JAR file
-ENTRYPOINT ["java", "-jar", "/app/tamilschool.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
